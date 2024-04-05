@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <style>
+        :root {
+            --sec_rotate: 0deg;
+            --min_rotate: 0deg;
+            --hr_rotate: 0deg;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(90deg, #d52121, rgb(75, 71, 71));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+        .main {
+            position: relative;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            border-radius: 50%;
+            border: 10px solid rgba(0, 0, 0, 0.8);
+            box-shadow: 4px 4px 10px black, -4px -4px 10px black, inset 1px 1px 5px white, inset -1px -1px 5px white;
+        }
+
+        .main::before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 49%;
+            width: 3px;
+            height: 15px;
+            background-color: black;
+            z-index: 1000;
+        }
+
+        .main::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 4px;
+            width: 15px;
+            height: 3px;
+            background-color: black;
+            z-index: 1000;
+        }
+
+        .Main {
+            position: relative;
+        }
+
+        .Main::before {
+            content: "";
+            position: absolute;
+            bottom: 15px;
+            left: 49.5%;
+            width: 3px;
+            height: 15px;
+            background-color: black;
+            z-index: 1000;
+        }
+
+        .Main::after {
+            content: "";
+            position: absolute;
+            bottom: 49%;
+            left: 14px;
+            width: 15px;
+            height: 3px;
+            background-color: black;
+            z-index: 1000;
+        }
+
+        .main span {
+            position: relative;
+            width: 12px;
+            height: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+            background-color: black;
+        }
+
+        .span::before {
+            content: "";
+            position: absolute;
+            top: -23.502px;
+            left: 46%;
+            width: 2px;
+            height: 30px;
+            transform: rotate(var(--hr_rotate));
+            border-radius: 10px;
+            transform-origin: bottom;
+            background-color: maroon;
+            z-index: 900;
+        }
+
+        .span::after {
+            content: "";
+            position: absolute;
+            top: -41px;
+            left: 35%;
+            width: 1.5px;
+            height: 48px;
+            transform: rotate(var(--min_rotate));
+            border-radius: 10px;
+            background-color: darkblue;
+            transform-origin: bottom;
+            z-index: 900;
+        }
+
+        .span2::before {
+            content: "";
+            position: absolute;
+            transform: rotate(var(--sec_rotate));
+            top: -70px;
+            left: 25%;
+            width: 1px;
+            height: 70px;
+            border-radius: 5px;
+            background-color: black;
+            transform-origin: bottom;
+            z-index: 900;
+        }
+
+        .main span span {
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        .time{
+            display: flex;
+            /* width:30vw;
+            height: 15vh; */
+            color: grey;
+            padding:10px;
+            font-size: 20px;
+            
+        }
+        /* #hr,#min{
+            
+
+        } */
+    </style>
+    <link rel="icon" href="./img/clock.jpg" type="image/x-icon">
+</head>
+
+<body>
+    <div class="Main">
+        <div class="main">
+            <span class="span">
+                <span class="span2">
+
+                </span>
+            </span>
+        </div>
+        
+    </div>
+    <div class="time">
+        <div id="hr">
+
+        </div>
+        <div id="min">
+
+        </div>
+        <div id="sec">
+
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            var d = new Date();
+            var hr = d.getHours();
+            var min = d.getMinutes();
+            var sec = d.getSeconds();
+            var hr_rot = hr * 30 + min / 2;
+            var min_rot = min * 6;
+            var sec_rot = sec * 6;
+            console.log(hr + " " + min + " " + sec);
+            var hour;
+            var am="AM";
+            if(min<10)
+            min="0"+min;
+            if(hr>12 && hr<=23)
+            {
+               am="PM";
+                hour=hr-12;
+            }
+            else
+              if(hr<=12)
+                 hour=hr;
+                 else
+                 hour="00";
+                       
+var h=document.getElementById("hr");
+var s=document.getElementById("sec");
+var m=document.getElementById("min");
+h.innerHTML=`${hour}`+" :";
+m.innerText=" "+min+" : ";
+s.innerText=sec+" "+am;
+// console.log(h);
+
+            const a = document.querySelector(":root");
+            a.style.setProperty("--sec_rotate", `${sec_rot}` + "deg");
+            a.style.setProperty("--min_rotate", `${min_rot}` + "deg");
+            a.style.setProperty("--hr_rotate", `${hr_rot}` + "deg");
+            // console.log(a.getPrpoerty)
+
+        }, 1000);
+    </script>
+</body>
+
+</html>
